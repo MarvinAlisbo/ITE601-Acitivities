@@ -1,29 +1,42 @@
 <?php
+
 class Payroll {
-    private $firstname;
-    private $lastname;
-    private $tax;
-    private $salary;
+    // Attributes
+    private $employeeId;
+    private $employeeName;
+    private $basicSalary;
+    private $taxRate;
 
-    public function __construct($firstname, $lastname, $tax, $salary) {
-        $this->firstname = $firstname;
-        $this->lastname = $lastname;
-        $this->tax = $tax;
-        $this->salary = $salary;
+    // Constructor
+    public function __construct($employeeId, $employeeName, $basicSalary, $taxRate) {
+        $this->employeeId = $employeeId;
+        $this->employeeName = $employeeName;
+        $this->basicSalary = $basicSalary;
+        $this->taxRate = $taxRate;
     }
 
-    public function computeNet() {
-        return $this->salary - $this->tax;
+    // Methods
+    public function calculateGrossSalary() {
+        return $this->basicSalary;
     }
 
-    public function getEmployeeName() {
-        return $this->firstname . " " . $this->lastname;
+    public function calculateTax() {
+        return $this->basicSalary * ($this->taxRate / 100);
+    }
+
+    public function calculateNetSalary() {
+        return $this->calculateGrossSalary() - $this->calculateTax();
+    }
+
+    public function displayEmployeeInfo() {
+        echo "Employee ID: " . $this->employeeId . "<br>";
+        echo "Employee Name: " . $this->employeeName . "<br>";
+        echo "Basic Salary: " . $this->basicSalary . "<br>";
+        echo "Tax Rate: " . $this->taxRate . "%<br>";
+        echo "Gross Salary: " . $this->calculateGrossSalary() . "<br>";
+        echo "Tax: " . $this->calculateTax() . "<br>";
+        echo "Net Salary: " . $this->calculateNetSalary() . "<br>";
     }
 }
 
-$payroll = new Payroll("Marvin", "Alisbo", 50, 500);
-
-echo "Employee Name: " . $payroll->getEmployeeName() . "\n";
-
-echo "Net: " . $payroll->computeNet();
 ?>
